@@ -190,7 +190,7 @@ with tab1:
     dX_sub, dY_sub = dX[::step, ::step], dY[::step, ::step]
     mag_sub = np.sqrt(dX_sub**2 + dY_sub**2)
     q = ax2.quiver(X_sub, Y_sub, dX_sub, dY_sub, mag_sub, cmap='coolwarm', scale_units='xy', scale=1.0)
-    ax2.set_title("Displacement Vector Field")
+    ax2.set_title("Displacement Vector Field (True Scale)")
     ax2.set_xlim([-BOUNDS, BOUNDS]); ax2.set_ylim([-BOUNDS, BOUNDS]); ax2.set_aspect('equal')
     fig.colorbar(q, ax=ax2)
     
