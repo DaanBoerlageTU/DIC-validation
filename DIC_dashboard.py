@@ -18,7 +18,7 @@ with st.expander("READ ME: Coordinate System & Sign Conventions (Click to expand
     * **Z-Axis:** Points UP. The camera is at $Z = +H_{CAM}$. The tank floor is at $Z = -H_{BOT}$.
     * **Grid (X, Y):** Grid of evaluation points. I need 256x256 displacement vectors defined on the 20x20m area on the tank floor. 20/256=0.078125 m grid spacing. (so not the same as 256x256 pixel resolution)
     
-    ### Matrix Indexing (Crucial for .npy export)
+    ### Matrix Indexing
     The `.npy` matrix must use a standard Cartesian layout, **not** a top-down image layout. For a 256x256 grid over a 20x20m bounds area:
     * **`matrix[0, 0]`** = Bottom-Left corner `(X = -10m, Y = -10m)`
     * **`matrix[255, 0]`** = Top-Left corner `(X = -10m, Y = +10m)`
