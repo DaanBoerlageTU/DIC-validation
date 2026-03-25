@@ -386,16 +386,35 @@ with tab3:
                 err_Y = dY_grid - exp_dY
                 err_mag = np.sqrt(err_X**2 + err_Y**2)
                 
+                # ... (existing code just above this)
                 rmse_x = np.sqrt(np.mean(err_X**2))
                 rmse_y = np.sqrt(np.mean(err_Y**2))
                 rmse_total = np.sqrt(np.mean(err_mag**2))
                 
-                col1, col2, col3 = st.columns(3)
-                col1.metric("RMSE (X-axis)", f"{rmse_x:.4f} m")
-                col2.metric("RMSE (Y-axis)", f"{rmse_y:.4f} m")
+                # --- NEW: Calculate Percentage Accuracy ---
+                # Using Global Relative Error (Normalized RMSE) to avoid division by zero
+                rms_true_dr = np.sqrt(np.mean(dr_mag**2))
+                
+                # Prevent division by zero just in case the true field is perfectly flat
+                global_relative_error = rmse_total / (rms_true_dr + 1e-10) 
+                
+                # Convert to percentage and clamp at 0% minimum
+                percentage_accuracy = max(0.0, 100.0 * (1.0 - global_relative_error))
+                
+                # --- UPDATED: Display 4 columns instead of 3 ---
+                col1, col2, col3, col4 = st.columns(4)
+                col1.metric("RMSE (X)", f"{rmse_x:.4f} m")
+                col2.metric("RMSE (Y)", f"{rmse_y:.4f} m")
                 col3.metric("Total RMSE", f"{rmse_total:.4f} m")
                 
+                # Display the accuracy, color it green if >95% (to match your 5% noise threshold)
+                if percentage_accuracy >= 95.0:
+                    col4.success(f"Accuracy: {percentage_accuracy:.1f}%")
+                else:
+                    col4.warning(f"Accuracy: {percentage_accuracy:.1f}%")
+                
                 vmax = max(np.max(dr_mag), np.max(exp_dr_mag))
+                # ... (existing code continues below to make the subplots)
 
                 fig3 = make_subplots(rows=1, cols=3, subplot_titles=("Theoretical Displacement", "Experimental Displacement", "Error Map (Theory - Exp)"))
                 
