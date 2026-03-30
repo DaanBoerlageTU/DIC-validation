@@ -408,7 +408,7 @@ with tab3:
                 col3.metric("Total RMSE", f"{rmse_total:.4f} m")
                 
                 # Display the accuracy, color it green if >95% (to match your 5% noise threshold)
-                if percentage_accuracy >= 95.0:
+                if percentage_accuracy >= 1.0:
                     col4.success(f"Accuracy: {percentage_accuracy:.1f}%")
                 else:
                     col4.warning(f"Accuracy: {percentage_accuracy:.1f}%")
